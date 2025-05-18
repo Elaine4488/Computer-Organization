@@ -14,27 +14,27 @@
    ```bash
    gcc --static quicksort.c -o quicksort
 
-3. **混合編譯 GEM5 + NVMain**  
+3. **混合編譯 GEM5 + NVMain**	
    在 gem5 根目錄使用以下指令：
    ```bash
    scons EXTRAS=../NVmain build/X86/gem5.opt
 
-4. **模擬測試2-way Associative**
+4. **2-way Associative 模擬測試**	
    將 --l3_assoc 設為 2，執行以下指令：
    ```bash
    ./build/X86/gem5.opt configs/example/se.py -c quicksort --cpu-type=TimingSimpleCPU --caches --l2cache --l3cache --l3_assoc=2 --l1i_size=32kB --l1d_size=32kB --l2_size=128kB --l3_size=1MB --mem-type=NVMainMemory --nvmain-config=../NVmain/Config/PCM_ISSCC_2012_4GB.config > terminal_output.txt
   > system.l3.overall_miss_rate::total = 0.433378
 
-5. **Fully-way Associative 模擬測試**
+5. **Fully-way Associative 模擬測試**	
    將 --l3_assoc 設為 1，執行以下指令：
    ```bash
    ./build/X86/gem5.opt configs/example/se.py -c quicksort --cpu-type=TimingSimpleCPU --caches --l2cache --l3cache --l3_assoc=1 --l1i_size=32kB --l1d_size=32kB --l2_size=128kB --l3_size=1MB --mem-type=NVMainMemory --nvmain-config=../NVmain/Config/PCM_ISSCC_2012_4GB.config > terminal_output.txt
-  > system.l3.overall_miss_rate::total = 0.396614
+   <pre> <code> system.l3.overall_miss_rate::total = 0.396614 </code> <pre>
 
 6. **結果分析**
    開啟 m5out/stats.txt，比較兩種組合度設定下的 Miss Rate，在 array size 擴增為 500000 的情況下:
-   -2-way associative 的 Miss Rate 較高
-   -fully associative 的 Miss Rate 較低
+    - 2-way associative 的 Miss Rate 較高
+    - fully associative 的 Miss Rate 較低
 
 
 
