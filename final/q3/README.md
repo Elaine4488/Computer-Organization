@@ -36,7 +36,7 @@
    > system.l3.overall_miss_rate::total = 0.396614
 
 6. **結果分析**  
-   開啟 m5out/stats.txt，比較兩種組合度設定下的 Miss Rate，在 array size 擴增為 500000 的情況下:
+   開啟 `m5out/stats.txt`，比較兩種組合度設定下的 Miss Rate，在 array size 擴增為 `500000` 的情況下:
     - 2-way associative 的 Miss Rate 較高
     - fully associative 的 Miss Rate 較低
 
