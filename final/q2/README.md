@@ -1,4 +1,4 @@
-# Final Project - Question 2: Enable L3 Cache in GEM5 + NVMain
+# Question 2: Enable L3 Cache in GEM5 + NVMain
 
 ## 說明
 
