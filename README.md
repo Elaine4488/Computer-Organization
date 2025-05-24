@@ -1,2 +1,33 @@
-# Computer-Organization
-老師: 陳增益, 陳弘軒 班級: 學士班 Undergraduate Program 代碼: CE3001*
+# Question 4: Modify last level cache policy based on frequency based replacement policy
+
+## 說明
+
+本題目目標為將 GEM5 中 L3 Cache 的替換策略（Replacement Policy）更改為頻率為基礎的 LFU（Least Frequently Used），並使用 quicksort 程式模擬其效能。
+
+## 實作步驟
+
+1. **修改 Replacement Policy 為 LFU**  
+   `configs/common/Caches.py` 中指定 L3 使用 LFURP 作為替換策略。
+
+2. **編譯 quicksort 執行檔**  
+   在 `gem5/benchmark` 執行以下指令編譯成執行檔：  
+   ```bash
+   gcc --static quicksort.c -o quicksort
+
+3. **混合編譯 GEM5 + NVMain**  
+   在 `gem5` 根目錄使用以下指令：
+   ```bash
+   scons EXTRAS=../NVmain build/X86/gem5.opt
+
+4. ** LFU 策略 模擬測試**  
+   將 `--l3_assoc` 設為 2，執行以下指令：
+   ```bash
+   ./build/X86/gem5.opt configs/example/se.py -c benchmark/quicksort --cpu-type=TimingSimpleCPU --caches --l2cache --l3cache --l3_assoc=2 --l1i_size=32kB --l1d_size=32kB --l2_size=128kB --l3_size=1MB --mem-type=NVMainMemory --nvmain-config=../NVmain/Config/PCM_ISSCC_2012_4GB.config > terminal_output.txt
+   ```
+ 
+   > system.l3.overall_miss_rate::total = 0.461621
+
+5. **結果分析**  
+   開啟 `m5out/stats.txt`，比較兩種組合度設定下的 Miss Rate，在 array size 為 `500000` 的情況下:
+    - 2-way associative 的 Miss Rate 較高
+    - fully associative 的 Miss Rate 較低
