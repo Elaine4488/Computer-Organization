@@ -1,21 +1,22 @@
-# Question 4: Modify last level cache policy based on frequency based replacement policy
+# Question 5: Test the performance of write back and write through policy based on 4-way associative cache with 
+isscc_pcm
 
 ## 說明
 
-本題目目標為將 GEM5 中 L3 Cache 的替換策略（Replacement Policy）更改為頻率為基礎的 LFU (Least Frequently Used），並使用相同的 benchmark（quicksort）與 Q3 中的 2-way set associative 的預設策略 LRU（Least Recently Used）做比較。
+本題目目標為將 GEM5 中 L3 採用 4-way associative 下，使用 **Write Back**（預設）與 **Write Through** 兩種寫入策略的效能差異。透過 benchmark `multiply` 分析兩種寫入策略下的記憶體寫入請求數（Write Requests) 。
 
 ## 實作步驟
 
-1. **修改 Replacement Policy 為 LFU**  
-   `configs/common/Caches.py` 中指定 L3 使用 LFURP 作為替換策略。
+1. **修改 Replacement Policy 回 LRU**  
+   移除 `configs/common/Caches.py` 中 L3 替換策略 LFURP 。
    ```python
    replacement_policy = Param.BaseReplacementPolicy(LFURP(),"Replacement policy")
    ```
    
-3. **編譯 quicksort 執行檔**  
+3. **編譯 multiply 執行檔**  
    在 `gem5/benchmark` 執行以下指令編譯成執行檔：  
    ```bash
-   gcc --static quicksort.c -o quicksort
+   gcc --static multiply.c -o multiply
 
 4. **混合編譯 GEM5 + NVMain**  
    在 `gem5` 根目錄使用以下指令：
