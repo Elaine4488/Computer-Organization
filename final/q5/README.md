@@ -44,4 +44,4 @@
 6. **結果分析**  
    開啟 `m5out/stats.txt`，比較兩種不同策略的 totalWriteRequests :
     - WB: 694
-    - WT: 7153759
+    - WT: 13906264
