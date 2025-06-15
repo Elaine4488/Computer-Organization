@@ -25,13 +25,13 @@
 4. **WB 模擬測試**  
    將 `--l3_assoc` 設為 4，執行以下指令：
    ```bash
-   ./build/X86/gem5.opt configs/example/se.py -c benchmark/quicksort --cpu-type=TimingSimpleCPU --caches --l2cache --l3cache --l3_assoc=4 --l1i_size=32kB --l1d_size=32kB --l2_size=128kB --l3_size=1MB --mem-type=NVMainMemory --nvmain-config=../NVmain/Config/PCM_ISSCC_2012_4GB.config > terminal_output.txt
+   ./build/X86/gem5.opt configs/example/se.py -c benchmark/multiply --cpu-type=TimingSimpleCPU --caches --l2cache --l3cache --l3_assoc=4 --l1i_size=32kB --l1d_size=32kB --l2_size=128kB --l3_size=1MB --mem-type=NVMainMemory --nvmain-config=../NVmain/Config/PCM_ISSCC_2012_4GB.config > terminal_output.txt
    ```
  
    > system.mem_ctrls.num_writes::total = 91059
 
 5. **WT 模擬測試**   
-   `src/mem/cache/base.cc` 中, 在 write hit 時，主動發送一個 WriteClean 封包寫入主記憶體，模擬 write-through 策略下每次寫入都同步更新記憶體的行為:
+   `src/mem/cache/base.cc` 中在 write hit 時，主動發送一個 WriteClean 封包寫入主記憶體，模擬 write-through 策略下每次寫入都同步更新記憶體的行為:
    ```python
    if (blk->isWritable()){
 	PacketPtr writeclean_pkt = writecleanBlk(blk, pkt->req->getDest(), pkt->id);
